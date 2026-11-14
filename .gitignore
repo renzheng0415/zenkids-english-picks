@@ -2,3 +2,7 @@ CODEX_PROMPT.md
 .DS_Store
 __pycache__/
 *.pyc
+# source / oversized originals — site uses webp, poster, and the compressed web gif
+yinyin-src/
+assets/yinyin/*.png
+assets/yinyin/MANIFEST.txt
