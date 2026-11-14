@@ -6,3 +6,6 @@ __pycache__/
 yinyin-src/
 assets/yinyin/*.png
 assets/yinyin/MANIFEST.txt
+
+assets/yinyin/BADGES_MANIFEST.txt
+tests/

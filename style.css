@@ -52,3 +52,18 @@
 /* yinyin-rainbow-space */
 #rainbowBadge{margin:12px 0 36px;padding-bottom:28px}
 #rainbowBadge .eyebrow{margin-top:8px}
+
+/* Eight-stage map: compact single-column cards with room for Chinese titles. */
+#stages .stage{min-width:0}
+.stage-badge{width:64px;height:64px;object-fit:contain}
+@media(max-width:650px){
+ #stages{gap:12px}
+ #stages .stage{grid-template-columns:64px minmax(0,1fr);padding:14px;min-height:150px}
+ #stages .stage.selected{padding:13px}
+ #stages .stage-icon{grid-column:1;grid-row:1/7;align-self:center;margin:0;text-align:center}
+ #stages .stage>small,#stages .stage>h3,#stages .stage>.status{grid-column:2}
+ #stages .stage h3{font-size:18px;line-height:1.45;overflow-wrap:break-word}
+ #stages .stage .status{margin-top:5px}
+ #badgeList .stage h3{min-width:0;overflow-wrap:break-word}
+ #badgeList .stage .stage-icon{display:block}
+}

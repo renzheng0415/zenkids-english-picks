@@ -27,13 +27,13 @@ function render() {
  DATA.path.stages.forEach((s,i)=>{
   const open=unlocked(i), earned=complete(i);
   const card=node('button',undefined,'stage'+(!open?' locked':'')+(selected===i?' selected':''));
-  card.append(node('span',earned?'🏅':s.icon,'stage-icon'),node('small',`第 ${i+1} 关`),node('h3',s.name),node('small',`${count(s)} / ${s.items.length} 条已打卡`),progress(count(s),s.items.length,s.name+'观看进度'),node('span',earned?'获得徽章！再看一遍 →':open?'出发吧 →':'🔒 先完成上一关','status'));
+  const stageArt=earned?node('img',undefined,'stage-icon stage-badge'):node('span',open?s.icon:'🔒','stage-icon');if(earned){stageArt.src='assets/yinyin/badge-'+s.id+'.webp';stageArt.alt=s.name+'徽章';}card.append(stageArt,node('small',`第 ${i+1} 关`),node('h3',s.name),node('small',`${count(s)} / ${s.items.length} 条已打卡`),progress(count(s),s.items.length,s.name+'观看进度'),node('span',earned?'获得徽章！再看一遍 →':open?'出发吧 →':'🔒 先完成上一关','status'));
   card.setAttribute('aria-expanded',String(selected===i&&!$('lesson').hidden));
   if(!open)card.setAttribute('aria-disabled','true');
   card.onclick=()=>{if(!unlocked(i))return toast('先完成上一关，再来找我吧！');selectStage(i,true);};$('stages').append(card);
-  const badge=node('div',undefined,'stage');if(earned){const art=node('img',undefined,'badge-art');art.src='assets/yinyin/yinyin-badge.webp';art.alt='银银捧着金色星星徽章';art.loading='lazy';badge.append(art);}badge.append(node('span',earned?'🏅':'☆','stage-icon'),node('h3',s.name),node('small',earned?'你做到了！':`${count(s)} / ${s.items.length} 条 · ${missions.has(s.id)?'小任务完成':'等你来点亮'}`));$('badgeList').append(badge);
+  const badge=node('div',undefined,'stage');if(earned){const art=node('img',undefined,'badge-art');art.src='assets/yinyin/badge-'+s.id+'.webp';art.alt=s.name+'徽章';art.loading='lazy';badge.append(art);}badge.append(node('span',earned?'🏅':'☆','stage-icon'),node('h3',s.name),node('small',earned?'你做到了！':`${count(s)} / ${s.items.length} 条 · ${missions.has(s.id)?'小任务完成':'等你来点亮'}`));$('badgeList').append(badge);
  });
- const finalBadge=$('rainbowBadge');finalBadge.replaceChildren();const finalArt=node('img');finalArt.src='assets/yinyin/'+(allComplete()?'yinyin-celebrate':'bunny-sidekick')+'.webp';finalArt.alt=allComplete()?'银银庆祝彩虹公主通关':'小兔子等你一起完成冒险';finalArt.loading='lazy';finalBadge.append(finalArt,node('p','Rainbow Princess','eyebrow'),node('h2','彩虹公主'),node('p',allComplete()?'最终徽章已点亮！银银，你做到了！':'完成三关的全部视频和小任务，就能点亮最终徽章。'));if(allComplete()){const replay=node('button','再庆祝一次 🌈','primary');replay.onclick=celebrate;finalBadge.append(replay);}
+ const finalBadge=$('rainbowBadge');finalBadge.replaceChildren();const finalArt=node('img');finalArt.src='assets/yinyin/'+(allComplete()?'yinyin-celebrate':'bunny-sidekick')+'.webp';finalArt.alt=allComplete()?'银银庆祝彩虹公主通关':'小兔子等你一起完成冒险';finalArt.loading='lazy';finalBadge.append(finalArt,node('p','Rainbow Princess','eyebrow'),node('h2','彩虹公主'),node('p',allComplete()?'最终徽章已点亮！银银，你做到了！':'完成八关的全部视频和小任务，就能点亮最终徽章。'));if(allComplete()){const replay=node('button','再庆祝一次 🌈','primary');replay.onclick=celebrate;finalBadge.append(replay);}
  const resume=videoMap.has(last)&&unlocked(stageOf(last));
  $('continue').textContent=resume?'▶ 继续观看':'▶ 开始闯关';
  $('resumeHint').textContent=resume?videoMap.get(last).title:'从第一关开始，一起唱起来';
@@ -42,7 +42,7 @@ function render() {
 function stageOf(id) {return DATA.path.stages.findIndex(s=>s.items.some(item=>item.id===id));}
 function selectStage(index,scroll) {if(!unlocked(index))return;selected=index;$('lesson').hidden=false;render();if(scroll){$('lesson').scrollIntoView({block:'start',behavior:'auto'});$('stageTitle').focus({preventScroll:true});}}
 function renderLesson() {
- const s=DATA.path.stages[selected];$('stageGuide').src='assets/yinyin/'+['yinyin-wave','yinyin-cheer','yinyin-read'][selected]+'.webp';$('stageTitle').textContent=`${s.icon} 第 ${selected+1} 关 · ${s.name}`;$('stageGoal').textContent=s.goal;$('videoList').replaceChildren();
+ const s=DATA.path.stages[selected];$('stageGuide').src='assets/yinyin/'+('badge-'+s.id)+'.webp';$('stageTitle').textContent=`${s.icon} 第 ${selected+1} 关 · ${s.name}`;$('stageGoal').textContent=s.goal;$('videoList').replaceChildren();
  s.items.forEach((item,i)=>{const v=videoMap.get(item.id);if(!v)return;const card=node('article',undefined,'video-card');
  if(v.cover){const img=node('img',undefined,'thumbnail');img.src=v.cover;img.alt='';img.loading='lazy';img.referrerPolicy='no-referrer';img.onerror=()=>{img.hidden=true;};card.append(img);}
  const copy=node('div',undefined,'video-copy');const sec=Number(v.duration)||0;copy.append(node('h3',`${i+1}. ${v.title}`),node('p',`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')} · ${item.note}`));const play=node('button',done.has(v.id)?'✓ 再看一遍':'▶ 播放');play.setAttribute('aria-label',`${done.has(v.id)?'再看':'播放'} ${v.title}`);play.onclick=()=>openVideo(v.id);card.append(copy,play);$('videoList').append(card);});
@@ -57,7 +57,7 @@ function openVideo(id) {
  if(!$('playerDialog').open){$('playerDialog').showModal();document.body.style.overflow='hidden';}render();
 }
 function updatePlayer() {$('doneButton').textContent=done.has(current)?'✓ 已打卡':'✓ 看完打卡';$('doneButton').disabled=done.has(current);const s=DATA.path.stages[stageOf(current)];$('nextButton').disabled=s.items.at(-1).id===current;$('nextButton').textContent=$('nextButton').disabled?'本关最后一条':'下一条 →';}
-$('doneButton').onclick=()=>{if(!current)return;done.add(current);write(KEYS.done,[...done]);updatePlayer();render();if(!storageFailed)toast('银银，打卡成功！小兔子也为你加油！','yinyin-cheer');};
+$('doneButton').onclick=()=>{if(!current)return;done.add(current);write(KEYS.done,[...done]);updatePlayer();render();if(!storageFailed)toast('银银，打卡成功！小兔子也为你加油！','yinyin-cheer');if(allComplete())celebrate();};
 $('nextButton').onclick=()=>{const s=DATA.path.stages[stageOf(current)],i=s.items.findIndex(v=>v.id===current);if(i<s.items.length-1)openVideo(s.items[i+1].id);};
 $('closePlayer').onclick=()=>$('playerDialog').close();
 $('playerDialog').addEventListener('close',()=>{$('playerMount').replaceChildren();document.body.append($('notice'));document.body.style.overflow='';current=null;});
