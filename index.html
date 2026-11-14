@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff8e8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="英语闯关">
+<meta name="description" content="爸爸为你挑的英文动画，给 6–8 岁零基础孩子的三关英语小冒险。">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="stylesheet" href="style.css">
+<title>英语闯关</title>
+</head>
+<body>
+<header><a class="brand" href="./" aria-label="英语闯关首页"><span class="logo">A<span>★</span></span><span>英语闯关<small>爸爸为你挑的英文动画</small></span></a><span class="age">6–8 岁 · 零基础</span></header>
+<main>
+<section id="adventure" aria-labelledby="welcome">
+<div class="hero"><div><span class="eyebrow">HELLO, 小小探险家！</span><h1 id="welcome">每天一小步，<br>英语大冒险 <span>✦</span></h1><p id="intro"></p><button class="primary" id="continue">▶ 开始闯关</button><p class="hint" id="resumeHint">从第一关开始，一起唱起来</p></div><div class="hero-art" aria-hidden="true"><span class="star">✦</span><b>A</b><span class="bubble">Hello!</span><i>B</i><span class="little-star">★</span></div></div>
+<div class="overall"><div><strong>我的探险进度</strong><span id="totalText"></span></div><progress id="totalProgress" max="27" value="0" aria-label="总观看进度"></progress></div>
+<div class="section-title"><h2>🗺️ 三关小冒险</h2><span>慢慢来，你可以的</span></div>
+<div id="stages" class="stages"></div>
+<section id="lesson" class="lesson" hidden aria-labelledby="stageTitle"><h2 id="stageTitle" tabindex="-1"></h2><p id="stageGoal"></p><div id="videoList" class="video-list"></div><div class="mission"><h3>🤝 和爸爸妈妈一起</h3><p id="missionText"></p><button id="missionButton">完成小任务</button><p class="hint" id="missionHint"></p></div></section>
+</section>
+<section id="badges" hidden><span class="eyebrow">MY LITTLE TROPHIES</span><h1>我的小徽章 ⭐</h1><p>看完一关，再做小任务，就能得到一枚！</p><div id="badgeList" class="stages"></div></section>
+<section id="about" hidden class="about"><span class="eyebrow">给爸爸妈妈</span><h1>一起，把英语听熟</h1><h2>为什么做</h2><p>我是阿政，想把适合孩子起步的英文儿歌、动画和绘本放在一起，少一点挑选，多一点陪伴。</p><h2>给谁看</h2><p>给 6–8 岁、英语基本零基础的孩子。先跟唱，再看故事，最后听绘本。不要求每句都听懂。</p><h2>怎么用</h2><p>按顺序看三关。点视频上的「播放」，手机和平板还需要在播放器里点一下才会播放。看完手动打卡，完成亲子小任务，就能解锁下一关。一次一小段，累了就休息。</p><p>「继续观看」会回到上次打开的视频，不记录播放秒数。进度只存在这台设备、这个浏览器，不会跨设备同步；清除浏览器资料会丢失进度。</p><h2>家长须知</h2><p>请先陪孩子预览。本站仅使用 B 站官方嵌入播放器，不保存视频流。播放器内的广告、推荐、登录或跳转由 B 站控制，本站无法过滤，请家长陪同。</p><p>部分视频为网友搬运，未核实取得版权授权，版权归原作者；接口可访问不代表版权授权，也不保证嵌入一直可播。视频可能失效，请只在家里看，不要下载或再次传播；家庭观看也不等于获得版权许可。本站不是 B 站官方产品。</p><p>打不开时可以稍后重试；下方「家长打开 B 站原页」会离开本站。审查详情见 <a href="REVIEW_LOG.md">REVIEW_LOG.md</a>。</p><h2>放到 iPhone / iPad 主屏幕</h2><p>用 Safari 打开本站，点分享按钮 → 添加到主屏幕。以后就可以像小应用一样打开。网页可本地打开；添加到主屏幕请使用 HTTP(S) 网站地址，播放仍需联网。</p><h2>开源致谢</h2><p>改编自 <a href="https://github.com/limin112/bilipicks" target="_blank" rel="noopener noreferrer">BiliPicks</a>，感谢作者 limin112 / MinLiBuilds。代码遵循 <a href="LICENSE">MIT License</a>，Copyright (c) 2026 MinLiBuilds。视频及封面不属于代码授权范围。</p></section>
+</main>
+<nav class="tabs" aria-label="主要导航"><button data-tab="adventure" aria-current="page">🗺️ 闯关</button><button data-tab="badges">⭐ 徽章</button><button data-tab="about">🌱 家长</button></nav>
+<dialog id="playerDialog" aria-labelledby="playerTitle"><div class="player-top"><h2 id="playerTitle"></h2><button id="closePlayer" aria-label="关闭播放器">✕</button></div><div id="playerMount"></div><p class="hint">点一下播放器开始看。看完记得打卡哦！</p><div class="player-actions"><button id="doneButton" class="primary">✓ 看完打卡</button><button id="nextButton">下一条 →</button></div><p id="playerNote"></p><details><summary>家长查看</summary><p id="parentNote"></p><a id="sourceLink" target="_blank" rel="noopener noreferrer">家长打开 B 站原页 ↗</a></details></dialog>
+<div id="notice" role="status" aria-live="polite"></div>
+<script src="data.js"></script><script src="app.js"></script>
+</body></html>

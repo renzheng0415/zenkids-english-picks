@@ -1,0 +1,4 @@
+CODEX_PROMPT.md
+.DS_Store
+__pycache__/
+*.pyc
